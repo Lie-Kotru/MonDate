@@ -61,9 +61,7 @@
     <section class="step" id="step3">
       <p class="eyebrow">C'est gravé dans la roche</p><span class="sigil" aria-hidden="true">✦</span>
       <h1>Incroyable &nbsp;!</h1>
-      <p class="details">Rendez-vous avec ta copine incroyable (moi) <strong>mardi 13 octobre 2026 à 21h30</strong> au <strong>Grand Rex</strong> pour voir <strong>Leviticus en VO</strong> (n'oublie pas tes lunettes&nbsp;!).</p>
-      <p class="intro">ps : un mail va être expédié à Amélie Cautru Declercq pour valider votre présence<br>vous allez également recevoir un mail de confirmation</p>
-      <button class="primary" id="validate">Valider</button>
+      <p class="details">Rendez-vous avec ta copine incroyable (moi) <strong>mardi 13 octobre 2026 à 21h30</strong> au <strong>Grand Rex</strong> pour voir <strong>Leviticus en VO</strong> (n'oublie [...]
       <p class="tiny">✦ Moins de 20min porte à porte ✦</p>
     </section>
   </main>
@@ -74,7 +72,7 @@
         document.getElementById(button.dataset.next).classList.add('active');
       });
     });
-    document.getElementById('validate').addEventListener('click', event => {
+    document.getElementById('validate')?.addEventListener('click', event => {
       const button = event.currentTarget;
       button.disabled = true;
       button.textContent = 'Validé';
