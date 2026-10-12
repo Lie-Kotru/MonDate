@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Une invitation pour toi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+    :root { color-scheme: dark; --paper:#f5eee5; --muted:#b9aaa0; --red:#df665b; --wine:#632b35; }
+    * { box-sizing:border-box; }
+    body {
+      min-height:100vh; margin:0; padding:24px; display:grid; place-items:center;
+      color:var(--paper); background:radial-gradient(ellipse at 50% 40%,#49242a 0,transparent 55%),
+      repeating-linear-gradient(135deg,#191615 0 12px,#1b1817 12px 13px);
+      font-family:'DM Mono',monospace;
+    }
+    main { width:min(100%,650px); padding:clamp(32px,7vw,68px); position:relative; text-align:center;
+      border:1px solid #74645b; background:rgba(24,21,20,.96); box-shadow:0 25px 90px #0009; }
+    main:before,main:after { content:'✳'; position:absolute; top:14px; color:var(--red); }
+    main:before { left:16px; } main:after { right:16px; }
+    .step { display:none; animation:in .35s ease both; } .step.active { display:block; }
+    .eyebrow,.tiny { color:var(--red); font-size:10px; letter-spacing:.2em; text-transform:uppercase; }
+    .eyebrow { margin:0 0 24px; } .sigil { color:var(--red); font-size:24px; }
+    h1 { margin:20px 0 16px; font:600 clamp(34px,7vw,55px)/1.13 'Playfair Display',Georgia,serif; }
+    .intro { max-width:420px; margin:0 auto 30px; color:var(--muted); font-size:13px; line-height:1.8; }
+    .buttons { display:grid; gap:12px; }
+    button { padding:16px; border:1px solid #86756b; color:var(--paper); background:transparent;
+      font:500 12px/1.5 'DM Mono',monospace; cursor:pointer; transition:.2s; }
+    button:hover,button:focus-visible { border-color:var(--red); background:#df665b1c; transform:translateY(-2px); outline:none; }
+    button.primary { border-color:var(--red); background:var(--wine); }
+    button:disabled { border-color:#74645b; color:#8b817b; background:#302b29; cursor:default; transform:none; }
+    .details { margin:28px 0 0; padding:22px 10px; border-block:1px solid #a74b4c;
+      font-size:13px; line-height:2; }
+    .details strong { color:#f08a7b; font-weight:500; } .tiny { margin:23px 0 0; color:var(--muted); }
+    @keyframes in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    @media(prefers-reduced-motion:reduce) { *,*:before,*:after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+  </style>
+</head>
+<body>
+  <main aria-live="polite">
+    <section class="step active" id="step1">
+      <p class="eyebrow">à la femme que j'aime</p><span class="sigil" aria-hidden="true">✳</span>
+      <h1>Que dirais-tu d'un date avec moi, mardi soir&nbsp;?</h1>
+      <p class="intro">(Ne me fous pas de vent stp)</p>
+      <div class="buttons">
+        <button class="primary" data-next="step2">Bien sûr, j'adore passer du temps avec toi&nbsp;!</button>
+        <button data-next="step2">Non, tu me soûles, j'ai déjà des plans.</button>
+      </div>
+      <p class="tiny"> (demain soir, en effet) </p>
+    </section>
+    <section class="step" id="step2">
+      <p class="eyebrow"></p><span class="sigil" aria-hidden="true">☽</span>
+      <h1>Un ciné ça te dirait&nbsp;?</h1>
+      <p class="intro">Un ciné stylé, un film qui promet, et toi à côté de moi.</p>
+      <div class="buttons">
+        <button class="primary" data-next="step3">Carrément&nbsp;!</button>
+        <button data-next="step3">Toutafé&nbsp;!</button>
+      </div>
+      <p class="tiny"></p>
+    </section>
+    <section class="step" id="step3">
+      <p class="eyebrow">C'est gravé dans la roche</p><span class="sigil" aria-hidden="true">✦</span>
+      <h1>Incroyable &nbsp;!</h1>
+      <p class="details">Rendez-vous avec ta copine incroyable (moi) <strong>mardi 13 octobre 2026 à 21h30</strong> au <strong>Grand Rex</strong> pour voir <strong>Leviticus en VO</strong> (n'oublie pas tes lunettes&nbsp;!).</p>
+      <p class="intro">ps : un mail va être expédié à Amélie Cautru Declercq pour valider votre présence<br>vous allez également recevoir un mail de confirmation</p>
+      <button class="primary" id="validate">Valider</button>
+      <p class="tiny">✦ Moins de 20min porte à porte ✦</p>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll('[data-next]').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        document.getElementById(button.dataset.next).classList.add('active');
+      });
+    });
+    document.getElementById('validate').addEventListener('click', event => {
+      const button = event.currentTarget;
+      button.disabled = true;
+      button.textContent = 'Validé';
+      const subject = encodeURIComponent('Confirmation du rendez-vous');
+      const body = encodeURIComponent("RDV demain soir à 21h30 au Grand Rex, je t'aime !");
+      window.location.href = `mailto:ameliecautru@gmail.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
